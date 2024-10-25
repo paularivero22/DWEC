@@ -1,0 +1,19 @@
+.contenedor {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    text-align: center;
+    line-height: 50px;
+    font-size: 20px;
+    margin: 0; /* Elimina el margen entre las celdas */
+    padding: 0; /* Elimina cualquier relleno adicional */
+    box-sizing: border-box; /* Asegura que el tamaño incluya bordes y padding */
+}
+
+
+.cartones {
+    display: flex;
+    gap: 20px; /* Añade espacio entre los cartones */
+}
+

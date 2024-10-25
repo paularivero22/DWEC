@@ -4,41 +4,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Bingo de JavaScript</title>
+    <link rel="stylesheet" href="estilos.css">
     <script src="script.js" defer></script>
 </head>
 
 <body>
-    <h1>Bingo en JavaScript</h1>
-    <form id="segundos">
-        <label for="segundos">Segundos:</label>
-        <input type="number" name="segundos" id="segundos">
-        <input type="submit" value="comenzar">
-        </label>
-    </form>
-
-    <h1>Resumen Jugadores</h1>
-
-    <form id="resumen">
-
-    </form>
-
-    <form id="bolas">
-
-    </form>
-    <form id="cartones">
-        <div id="j1">
-            
-        </div>
-
-        <div id="j2">
-
-        </div>
-
-        <div id="j3">
-
-        </div>
-    </form>
+    <h1>Bingo de JavaScript</h1>
+    Segundos: <input type="number" id="segundos" name="segundos" placeholder="entre 1 y 10" value="3">
+    <button id="comenzar" name="comenzar">Comenzar partida</button>
+    <h2>Resumen Jugadores</h2>
+    <div id="resumen"></div>
+    <h2>Bolas Sacadas</h2>
+    <div id="bolasSacadas"></div>
+    <h2>Cartones de los Jugadores</h2>
+    <div class="cartones">
+        <div id="jugador1"></div>
+        <div id="jugador2"></div>
+    </div>
+    <h2>Carton jugador humano</h2>
+    <div id="jugador3"></div>
+    <h2>Acciones del Jugador Humano</h2>
+    <button onclick="$bingo.cantarLinea()">Cantar Línea</button>
+    <button onclick="$bingo.cantarBingo()">Cantar Bingo</button>
 </body>
 
 </html>
