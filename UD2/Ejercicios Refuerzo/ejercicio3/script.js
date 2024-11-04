@@ -6,56 +6,84 @@ function traducirCaracterMorse(caracter) {
     switch (caracter) {
         case '.-':
             caracterTraducido = 'a';
-        case '-..':
+            break;
+        case '-...':
             caracterTraducido = 'b';
+            break;
         case '-.-.':
             caracterTraducido = 'c';
+            break;
         case '-..':
             caracterTraducido = 'd';
+            break;
         case '.':
             caracterTraducido = 'e';
+            break;
         case '..-.':
             caracterTraducido = 'f';
+            break;
         case '--.':
             caracterTraducido = 'g';
+            break;
         case '....':
             caracterTraducido = 'h';
+            break;
         case '..':
             caracterTraducido = 'i';
+            break;
         case '.---':
             caracterTraducido = 'j';
+            break;
         case '-.-':
             caracterTraducido = 'k';
+            break;
         case '.-..':
             caracterTraducido = 'l';
+            break;
         case '--':
             caracterTraducido = 'm';
+            break;
         case '-.':
             caracterTraducido = 'n';
+            break;
         case '---':
             caracterTraducido = 'o';
+            break;
         case '-..-':
             caracterTraducido = 'p';
+            break;
         case '--.-':
             caracterTraducido = 'q';
+            break;
         case '.-.':
             caracterTraducido = 'r';
+            break;
         case '...':
             caracterTraducido = 's';
+            break;
         case '-':
             caracterTraducido = 't';
+            break;
         case '..-':
             caracterTraducido = 'u';
+            break;
         case '...-':
             caracterTraducido = 'v';
+            break;
         case '-.--':
             caracterTraducido = 'w';
+            break;
         case '-..-':
             caracterTraducido = 'x';
+            break;
         case '-.--':
             caracterTraducido = 'y';
+            break;
         case '--..':
             caracterTraducido = 'z';
+            break;
+        default:
+            caracterTraducido = '';
     }
     return caracterTraducido;
 }
@@ -74,24 +102,27 @@ function esMorse(entrada) {
 }
 
 function traducirFraseMorse(cadena) {
-    let palabra;
-    let traduccion;
-    
+    let traduccion = "";
 
+    if (esMorse(cadena)) {
+        //separa la cadena cada 2 espacios
+        let palabras = cadena.split("   ");
 
+        for (let palabra of palabras) {
+            //separa la cadena cada 1 espacio
+            let caracteres = palabra.split(" ");
+
+            for (let caracter of caracteres) {
+                traduccion += traducirCaracterMorse(caracter);
+            }
+
+            //añade un espacio entre palabras
+            traduccion += " ";
+        }
+    }
+
+    console.log(traduccion.trim());
 }
 
-//let morse = [' ', '.', '-'];
-//let esMorse = entrada.every(x => morse.include(x));
-
-
-
-//se que es morse o no
-//si no es morse -> cada carater ocupa un caracter -> fn pasarDeTextoAMorse
-//caso contrario 
-//fn pasar de morse a TextDecoder
-
-
-//con una variable cadena, si es morse, tines que dividir por dos espacios seguidos -> sacas las palabras
-//luego, para cada palabra, dividir por 1 espacio -> sacas cada caracter morse
-//ahora que lo tengo troceado llamo a pasar de morse a texto caracter a caracter
+let cadena = ".... --- .-.. .-   -- ..- -. -.. ---";
+traducirFraseMorse(cadena);
