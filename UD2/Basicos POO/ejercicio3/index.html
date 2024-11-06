@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="Factura.js" defer></script>
+</head>
+
+<body>
+    <h1>DATOS DE LA FACTURA:</h1>
+    <form id="facturaForm">
+        <label for="clienteNIF">NIF: </label>
+        <input type="text" name="clienteNIF" id="clienteNIF">
+        <br>
+        <br>
+
+        <label for="fecha">Fecha: </label>
+        <input type="text" name="fecha" id="fecha">
+        <br>
+        <br>
+
+        <label for="fecha">Hora: </label>
+        <input type="text" name="hora" id="hora">
+        <br>
+        <br>
+
+        <label>Pagada:</label><br>
+        <label for="pagada-si">Sí</label>
+        <input type="radio" id="pagadaSi" name="pagada" value="true">
+        <label for="pagada-no">No</label>
+        <input type="radio" id="pagadaNo" name="pagada" value="false" checked>
+
+        <button onclick="actualizarFactura()">Actualizar Factura</button>
+    </form>
+
+    <h1>LINEAS DE LA FACTURA:</h1>
+    <form id="lineasForm">
+        <label for="concepto">Concepto:</label>
+        <input type="text" id="concepto">
+        <br>
+        <br>
+
+        <label for="cantidad">Cantidad:</label>
+        <input type="number" id="cantidad">
+        <br>
+        <br>
+
+        <label for="precio">Precio Unitario:</label>
+        <input type="number" id="precio" step="0.01">
+        <br>
+        <br>
+
+        <button onclick="agregarLinea()">Agregar Línea</button>
+        <button onclick="eliminarLinea()">Eliminar Última Línea</button>
+    </form>
+
+    <form id="serializacionForm">
+        <h3>Serialización y Deserialización</h3>
+        <label for="entrada">JSON de Entrada:</label>
+        <br>
+        <textarea id="entrada" rows="5"></textarea>
+        <br>
+        <button type="button" onclick="deserializarFactura()">Deserializar Factura</button>
+        <br>
+        <br>
+
+        <label for="salida">JSON de Salida:</label>
+        <br>
+        <textarea id="salida" rows="5" readonly></textarea>
+        <br>
+        <button type="button" onclick="serializarFactura()">Serializar Factura</button>
+        <br>
+        <br>
+    </form>
+
+    <h3>Impresión de Factura</h3>
+    <pre id="facturaDisplay"></pre>
+</body>
+
+</html>
