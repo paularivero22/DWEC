@@ -60,7 +60,7 @@
         <h3>Serialización y Deserialización</h3>
         <label for="entrada">JSON de Entrada:</label>
         <br>
-        <textarea id="entrada" rows="5"></textarea>
+        <textarea id="entrada" rows="15" cols="50"></textarea>
         <br>
         <button type="button" onclick="deserializarFactura()">Deserializar Factura</button>
         <br>
@@ -68,7 +68,7 @@
 
         <label for="salida">JSON de Salida:</label>
         <br>
-        <textarea id="salida" rows="5" readonly></textarea>
+        <textarea id="salida" rows="15" cols="50" readonly></textarea>
         <br>
         <button type="button" onclick="serializarFactura()">Serializar Factura</button>
         <br>
@@ -76,7 +76,7 @@
     </form>
 
     <h3>Impresión de Factura</h3>
-    <pre id="facturaDisplay"></pre>
+    <p id="mostrarFactura"></p>
 </body>
 
 </html>

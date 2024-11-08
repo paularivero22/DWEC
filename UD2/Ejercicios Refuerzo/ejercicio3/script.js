@@ -1,5 +1,6 @@
 'use strict';
 
+//DICCIONARIO
 function traducirCaracterMorse(caracter) {
     let caracterTraducido = "";
 
@@ -88,6 +89,95 @@ function traducirCaracterMorse(caracter) {
     return caracterTraducido;
 }
 
+function traducirLetra(letra) {
+    let caracterTraducido = "";
+
+    switch (letra) {
+        case 'a':
+            caracterTraducido = '.-';
+            break;
+        case 'b':
+            caracterTraducido = '-...';
+            break;
+        case 'c':
+            caracterTraducido = '-.-.';
+            break;
+        case 'd':
+            caracterTraducido = '-..';
+            break;
+        case 'e':
+            caracterTraducido = '.';
+            break;
+        case 'f':
+            caracterTraducido = '..-.';
+            break;
+        case 'g':
+            caracterTraducido = '--.';
+            break;
+        case 'h':
+            caracterTraducido = '....';
+            break;
+        case 'i':
+            caracterTraducido = '..';
+            break;
+        case 'j':
+            caracterTraducido = '.---';
+            break;
+        case 'k':
+            caracterTraducido = '-.-';
+            break;
+        case 'l':
+            caracterTraducido = '.-..';
+            break;
+        case 'm':
+            caracterTraducido = '--';
+            break;
+        case 'n':
+            caracterTraducido = '-.';
+            break;
+        case 'o':
+            caracterTraducido = '---';
+            break;
+        case 'p':
+            caracterTraducido = '-..-';
+            break;
+        case 'q':
+            caracterTraducido = '--.-';
+            break;
+        case 'r':
+            caracterTraducido = '.-.';
+            break;
+        case 's':
+            caracterTraducido = '...';
+            break;
+        case 't':
+            caracterTraducido = '-';
+            break;
+        case 'u':
+            caracterTraducido = '..-';
+            break;
+        case 'v':
+            caracterTraducido = '...-';
+            break;
+        case 'w':
+            caracterTraducido = '-.--';
+            break;
+        case 'x':
+            caracterTraducido = '-..-';
+            break;
+        case 'y':
+            caracterTraducido = '-.--';
+            break;
+        case 'z':
+            caracterTraducido = '--..';
+            break;
+        default:
+            caracterTraducido = '';
+    }
+    return caracterTraducido;
+}
+
+//COMPROBACIONES DE TIPO
 function esMorse(entrada) {
 
     for (let caracter of entrada) {
@@ -101,6 +191,17 @@ function esMorse(entrada) {
     return true;
 }
 
+function esNormal(entrada) {
+    for (let caracter of entrada) {
+        let caracterMorse = (caracter === '.' || caracter === '-' || caracter === ' ');
+
+        if (caracterMorse) {
+            return true;
+        }
+    }
+}
+
+//TRADUCCIONES
 function traducirFraseMorse(cadena) {
     let traduccion = "";
 
@@ -124,5 +225,25 @@ function traducirFraseMorse(cadena) {
     console.log(traduccion.trim());
 }
 
-let cadena = ".... --- .-.. .-   -- ..- -. -.. ---";
-traducirFraseMorse(cadena);
+function traducirFrase(cadena) {
+    let traduccion = "";
+
+    if (esNormal(cadena)) {
+        let palabras = cadena.split(" ");
+
+        for (let palabra of palabras) {
+            for (let letra of palabra) {
+                traduccion += traducirLetra(letra);
+                traduccion += " ";
+            }
+            traduccion += "  ";
+        }
+    }
+    console.log(traduccion.trim());
+}
+
+let cadenaMorse = ".... --- .-.. .-   -- ..- -. -.. ---";
+traducirFraseMorse(cadenaMorse);
+
+let cadena = "hola mundo";
+traducirFrase(cadena);

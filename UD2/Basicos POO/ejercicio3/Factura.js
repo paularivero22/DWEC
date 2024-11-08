@@ -29,8 +29,8 @@ class Factura {
 
     get importeTotal() {
         let total = 0;
-        for (let i = 0; i < this.líneas.length; i++) {
-            const linea = this.líneas[i];
+        for (let i = 0; i < this.lineas.length; i++) {
+            const linea = this.lineas[i];
             total += linea.cantidad * linea.precioUnitario;
         }
         return total.toFixed(2);
@@ -43,6 +43,7 @@ class Factura {
     agregarLinea(concepto, cantidad, precioUnitario) {
         let linea = new LineaFactura(concepto, cantidad, precioUnitario);
         this.lineas.push(linea);
+        console.log(linea);
     }
 
     eliminarLinea() {
@@ -53,18 +54,18 @@ class Factura {
         let numLinea = 0;
         let facturaString = "";
 
-        facturaString += 'Datos de la factura:';
-        facturaString += 'NIF del cliente: ' + this.clienteNIF;
-        facturaString += 'Fecha: ' + this.fecha;
-        facturaString += 'Pagada: ' + this.pagada ? 'si' : 'no';
-        facturaString += 'Lineas: ';
+        facturaString += 'Datos de la factura: <br/>';
+        facturaString += 'NIF del cliente: ' + this.clienteNIF + "<br/>";
+        facturaString += 'Fecha: ' + this.fecha + "<br/>";
+        facturaString += 'Pagada: ' + (this.pagada ? 'sí' : 'no') + "<br/>";
+        facturaString += 'Lineas: <br/>';
 
         for (let linea of this.lineas) {
             numLinea++;
-            facturaString += '-' + numLinea + '-';
-            facturaString += 'Concepto: ' + linea.concepto;
-            facturaString += 'Cantidad: ' + linea.cantidad;
-            facturaString += 'Precio Unitario: ' + linea.precioUnitario;
+            facturaString += '-' + numLinea + '- <br/>';
+            facturaString += 'Concepto: ' + linea.concepto + "<br/>";
+            facturaString += 'Cantidad: ' + linea.cantidad + "<br/>";
+            facturaString += 'Precio Unitario: ' + linea.precioUnitario + "<br/>";
         }
         return facturaString;
     }
@@ -77,7 +78,7 @@ class Utilidades {
 
     static deserializarFactura(facturaJSON) {
         let datos = JSON.parse(facturaJSON);
-
+        
         let factura = new Factura(datos.clienteNIF, datos.fecha, datos.hora, datos.pagada);
 
         factura.lineas = datos.lineas.map(linea => new LineaFactura(linea.concepto, linea.cantidad, linea.precioUnitario));
@@ -88,6 +89,7 @@ class Utilidades {
 let factura = new Factura("", "", "", false);
 
 function actualizarFactura() {
+    event.preventDefault();
     factura.clienteNIF = document.getElementById("clienteNIF").value;
     factura.fecha = document.getElementById("fecha").value;
     factura.hora = document.getElementById("hora").value;
@@ -96,6 +98,7 @@ function actualizarFactura() {
 }
 
 function agregarLinea() {
+    event.preventDefault();
     const concepto = document.getElementById("concepto").value;
     const cantidad = parseInt(document.getElementById("cantidad").value);
     const precio = parseFloat(document.getElementById("precio").value);
@@ -104,20 +107,24 @@ function agregarLinea() {
 }
 
 function eliminarLinea() {
+    event.preventDefault();
     factura.eliminarLinea();
     actualizarVista();
 }
 
 function serializarFactura() {
+    event.preventDefault();
     document.getElementById("salida").value = Utilidades.serializarFactura(factura);
 }
 
 function deserializarFactura() {
+    event.preventDefault();
     const entrada = document.getElementById("entrada").value;
     factura = Utilidades.deserializarFactura(entrada);
     actualizarVista();
 }
 
 function actualizarVista() {
-    document.getElementById("mostrarFactura").textContent = factura.imprimirFactura();
+    event.preventDefault();
+    document.getElementById("mostrarFactura").innerHTML = factura.imprimirFactura();
 }
