@@ -6,53 +6,53 @@ const $formularioBusqueda = document.getElementById('formularioBusqueda');
 const $tituloBusqueda = document.getElementById('tituloBusqueda');
 const $buscarBtn = document.getElementById('buscarBtn');
 
-// Asegurarse de que los datos estén cargados
 $biblio.sacarDatos();
 
-// Función para mostrar el listado de autores
 const mostrarListadoAutores = () => {
+    //insertar codigo html junto con la funcion
     $contenido.innerHTML = `
         <h2>Listado de Autores</h2>
         <ul>
-            ${$biblio.generarHTMLListadoAutores()}
+            ${$biblio.generarHTMLListadoAutores()}  // Genera el HTML con el listado de autores
         </ul>
     `;
-    // Asignación de eventos a los botones "Ver" de los autores
-    document.querySelectorAll('.biblio-autor-ver').forEach(button => {
-        button.addEventListener('click', (event) => {
-            const autorId = event.target.dataset.id;
+
+    //event listener para cada botón "Ver" de autor con un for
+    const botones = document.querySelectorAll('.biblio-autor-ver'); // obtiene todos los botones
+
+    //for para cada boton 
+    for (const boton of botones) {
+        boton.addEventListener('click', (event) => {
+            const autorId = event.target.dataset.id; 
             const autor = $biblio.buscarAutor(autorId);
-            // Mostrar los detalles del autor en el contenido
             $contenido.innerHTML = $biblio.generarHTMLResultadoBuscador(autor);
         });
-    });
+    }
 };
 
-// Función para mostrar el listado de bibliotecas
 const mostrarListadoBibliotecas = () => {
     $contenido.innerHTML = `
         <h2>Listado de Bibliotecas</h2>
         <ul>
-            ${$biblio.generarHTMLListadoBibliotecas()}
+            ${$biblio.generarHTMLListadoBibliotecas()}  // Genera el HTML con el listado de bibliotecas
         </ul>
     `;
 };
 
-// Función para mostrar el listado de libros
 const mostrarListadoLibros = () => {
     $contenido.innerHTML = `
         <h2>Listado de Libros</h2>
         <ul>
-            ${$biblio.generarHTMLListadoLibros()}
+            ${$biblio.generarHTMLListadoLibros()}  
         </ul>
     `;
 };
 
-// Función para buscar un libro por título
 const buscarLibro = () => {
-    const titulo = $tituloBusqueda.value.trim(); // Obtener el valor del input
-    if (titulo) {
-        const libro = $biblio.buscarLibrosPorTitulo(titulo); // Buscar libro por título
+    const titulo = $tituloBusqueda.value.trim(); //trim elimina los espacios por delante y por detras para evitar errores 
+
+    if (titulo) {  // comprobar si el título no está vacío
+        const libro = $biblio.buscarLibrosPorTitulo(titulo);
         if (libro) {
             $contenido.innerHTML = `
                 <h2>Resultado de búsqueda</h2>
@@ -81,15 +81,14 @@ const buscarLibro = () => {
     }
 };
 
-// Mostrar el formulario de búsqueda
 const mostrarFormularioBusqueda = () => {
-    $formularioBusqueda.style.display = 'block';  // Hacer visible el formulario de búsqueda
-    $contenido.innerHTML = '';  // Limpiar el contenido principal
+    $formularioBusqueda.style.display = 'block';  //se muestra en formato block
+    $contenido.innerHTML = '';
 };
 
-// Asignación de eventos a los botones
+//event listener para cada botón de navegación del nav (menu)
 document.getElementById('listarAutores').addEventListener('click', (event) => {
-    event.preventDefault(); // Prevenir recarga de página
+    event.preventDefault();  //previene la recarga de la pagina
     mostrarListadoAutores();
 });
 
@@ -108,11 +107,11 @@ document.getElementById('buscarLibro').addEventListener('click', (event) => {
     mostrarFormularioBusqueda();
 });
 
-// Event listener para el botón de búsqueda
+//event listener del botón de búsqueda
 $buscarBtn.addEventListener('click', (event) => {
     event.preventDefault();
     buscarLibro();
 });
 
-// Mostrar el listado de libros por defecto al cargar la página
+// al cargar la pagina se muestra por defecto el listado de libros
 mostrarListadoLibros();
