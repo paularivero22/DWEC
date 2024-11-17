@@ -197,4 +197,4 @@ const datos = {
     ]
 };
 
-export default datos;
+export { datos };

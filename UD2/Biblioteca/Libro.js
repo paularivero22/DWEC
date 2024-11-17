@@ -19,13 +19,12 @@ export class Libro {
     }
 
     get estaDisponible() {
-        let ultimo = this.prestamos.toSorted((a, b) => { return a.fechaPrestamo === b.fechaPrestamo })[this.prestamos.length];
-
-        if (ultimo['fechaDevolucion'] != null) {
-            return true;
-        } else {
+        if (this.prestamos.length === 0) {
             return true;
         }
+
+        const ultimoPrestamo = this.prestamos[this.prestamos.length - 1];
+        return ultimoPrestamo.fechaDevolucion !== undefined;
     }
 
     generarHTMLCreacion() {
@@ -35,36 +34,35 @@ export class Libro {
             <label for="libroId">ID del libro: </label>
             <input type="text" name="libroId" id="libroId"></input>
 
-            <label for="titulo">Titulo: </label>
+            <label for="titulo">Título: </label>
             <input type="text" name="titulo" id="titulo"></input>
             
             <label for="ISBN">ISBN: </label>
             <input type="text" name="ISBN" id="ISBN"></input>
 
-            <label for="autorId">ID del autor</label>
-            <input type="text" name="autorId" id="auorId"></input>
+            <label for="autorId">ID del autor: </label>
+            <input type="text" name="autorId" id="autorId"></input>
 
-            <label for="bibliotecaId">ID de la biblioteca</label>
+            <label for="bibliotecaId">ID de la biblioteca: </label>
             <input type="text" name="bibliotecaId" id="bibliotecaId"></input>
 
-            <label for="prestamos">Prestamos: </label>
-            <input type="text" name="prestamos" id="prestamos"></input>
+            <button type="submit">Crear Libro</button>
        </form>`;
     }
 
     generarHTMLPropiedades() {
         return `<div id="detalles-libro-${this.libroId}">
             <p>ID: ${this.libroId}</p>
-            <p>Titulo: ${this.titulo}</p>
+            <p>Título: ${this.titulo}</p>
             <p>ISBN: ${this.ISBN}</p>
             <p>ID del Autor: ${this.autorId}</p>
             <p>ID de la biblioteca: ${this.bibliotecaId}</p>
-            <button id="editarLibro">Editar</button>
-            <button id="editarLibro">Borrar</button>
-            <button id="listarPrestamos">Listar Prestamos</button>
-            <button id="crearPrestamo">Crear Prestamo</button>
-            <button id="devolver">Devolver</button>
-        <div/>`;
+            <button id="editarLibro-${this.libroId}">Editar</button>
+            <button id="borrarLibro-${this.libroId}">Borrar</button>
+            <button id="listarPrestamos-${this.libroId}">Listar Préstamos</button>
+            <button id="crearPrestamo-${this.libroId}">Crear Préstamo</button>
+            <button id="devolver-${this.libroId}">Devolver</button>
+        </div>`;
     }
 
     generarHTMLEdicion() {
@@ -72,7 +70,7 @@ export class Libro {
             <h2>Editar Libro</h2>
             <p>ID: ${this.libroId}</p>
 
-            <label for="titulo">Titulo: </label>
+            <label for="titulo">Título: </label>
             <input type="text" name="titulo" id="titulo" value="${this.titulo}" required></input>
             
             <label for="ISBN">ISBN: </label>
@@ -108,16 +106,33 @@ export class Libro {
             };
             this.prestamos.push(prestamo);
             this.estaDisponible = false;
+        } else {
+            console.log("El libro no está disponible para préstamo.");
         }
     }
 
     devolverPrestamo() {
         if (!this.estaDisponible) {
-            for (let prestamo of prestamos) {
-                if (prestamo['fechaDevolucion'] != undefined) {
-                    prestamo['fechaDevolucion'] = new Date();
+            for (let prestamo of this.prestamos) {
+                if (prestamo.fechaDevolucion === undefined) {
+                    prestamo.fechaDevolucion = new Date();
+                    this.estaDisponible = true;
+                    break; 
                 }
             }
+        } else {
+            console.log("El libro ya está disponible.");
         }
     }
+
+    borrarLibro() {
+        console.log(`El libro con ID ${this.libroId} ha sido borrado.`);
+    }
+
+    editarLibro(nuevoTitulo, nuevoISBN) {
+        this.titulo = nuevoTitulo;
+        this.ISBN = nuevoISBN;
+        console.log(`Libro actualizado: ${this.titulo} (ISBN: ${this.ISBN})`);
+    }
+
 }

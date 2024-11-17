@@ -1,23 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestionar Biblioteca</title>
+    <title>Gestión de Biblioteca</title>
+    <link rel="stylesheet" href="estilos.css">
+
+    <script type="module" src="Autor.js"></script>
+    <script type="module" src="Biblioteca.js"></script>
+    <script type="module" src="Libro.js"></script>
+    <script type="module" src="Prestamo.js"></script>
+    <script type="module" src="gestorBiblioteca.js"></script>
+    <script type="module" src="scripts.js"></script>
 </head>
 
 <body>
-    <h1> Menu Principal </h1>
-    <nav id="menu">
-        <button id="listar-autores">Autores</button>
-        <button id="listar-libros">Libros</button>
-        <button id="listar-bibliotecas">Bibliotecas</button>
+    <header>
+        <h1>Gestión de Biblioteca</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#" id="listarAutores">Autores</a></li>
+            <li><a href="#" id="listarBibliotecas">Bibliotecas</a></li>
+            <li><a href="#" id="listarLibros">Libros</a></li>
+            <li><a href="#" id="buscarLibro">Buscar Libro</a></li>
+        </ul>
     </nav>
 
-    <div id="app">
-        
-    </div>
+    <section id="contenido">
+
+    </section>
+
+    <section id="formularioBusqueda" style="display:none;">
+        <h2>Buscar Libro</h2>
+        <input type="text" id="tituloBusqueda" placeholder="Ingrese el título del libro" />
+        <button id="buscarBtn">Buscar</button>
+    </section>
+
+
 </body>
 
 </html>

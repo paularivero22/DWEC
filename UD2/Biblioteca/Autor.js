@@ -17,28 +17,28 @@ export class Autor {
 
     generarHTMLCreacion() {
         return `
-            <form>
-                <h1>Crar nuevo Autor</h1>
-                <label for="autorId">ID del autor: </label>
-                <input type="text" name="autorId" id="autorId"></input>
-    
-                <label for="nombre">Nombre: </label>
-                <input type="text" name="nombre" id="nombre"></input>
-                
-                <label for="nacionalidad">Nacionalidad: </label>
-                <input type="text" name="nacionalidad" id="nacionalidad"></input>
-    
-                <label for="biografia">Biografia: </label>
-                <textarea name="biografia" id="biografia"></textarea>
+        <form id="crear-autor-form">
+            <h1>Crear nuevo Autor</h1>
+            <label for="autorId">ID del autor: </label>
+            <input type="text" name="autorId" id="autorId" required></input>
 
-                <button type="submit">Crear Autor</button>
-           </form>`;
+            <label for="nombre">Nombre: </label>
+            <input type="text" name="nombre" id="nombre" required></input>
+            
+            <label for="nacionalidad">Nacionalidad: </label>
+            <input type="text" name="nacionalidad" id="nacionalidad" required></input>
+
+            <label for="biografia">Biografía: </label>
+            <textarea name="biografia" id="biografia" required></textarea>
+
+            <button type="submit">Crear Autor</button>
+       </form>`;
     }
 
     generarHTMLPropiedades() {
-        let librosHTML;
+        let librosHTML = '';
         if (this.libros.length > 0) {
-            for (let libro of libros) {
+            for (let libro of this.libros) {
                 librosHTML += `<li>${libro.titulo}</li>`;
             }
         } else {
@@ -69,20 +69,14 @@ export class Autor {
             <textarea id="biografia" required>${this.biografia}</textarea>
 
             <button type="submit">Guardar Cambios</button>
-      </form>
-    `;
+      </form>`;
     }
 
-    añadirLibro(titulo) {
-        this.libros.push(titulo);
+    añadirLibro(libro) {
+        this.libros.push(libro);
     }
 
     eliminarLibro(titulo) {
-        for (let i = 0; i < this.libros.length; i++) {
-            if (this.libros[i] === titulo) {
-                this.libros.splice(i, 1);
-                break;
-            }
-        }
+        this.libros = this.libros.filter(libro => libro.titulo !== titulo);
     }
 }

@@ -48,9 +48,9 @@ export class Biblioteca {
     }
 
     generarHTMLPropiedades() {
-        let librosHTML;
+        let librosHTML = '';
         if (this.libros.length > 0) {
-            for (let libro of libros) {
+            for (let libro of this.libros) {
                 librosHTML += `<li>${libro.titulo}</li>`;
             }
         } else {
@@ -64,7 +64,6 @@ export class Biblioteca {
                 <ul>${librosHTML}</ul>
                 <button id="editar-biblioteca-${this.bibliotecaId}">Editar</button>
                 <button id="borrar-biblioteca-${this.bibliotecaId}">Borrar</button>
-      </div>
-    `;
+      </div>`;
       }
 }
