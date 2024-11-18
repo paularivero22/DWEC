@@ -54,10 +54,11 @@ export const $biblio = (function () {
         generarHTMLListadoAutores() {
             return autores.map(
                 autor => `
-                    <li>${autor.nombre} (${autor.nacionalidad})
+                    <li>${autor.autorId} - ${autor.nombre} (${autor.nacionalidad})
                         <button class="biblio-autor-ver" data-id="${autor.autorId}">Ver</button>
                         <button class="biblio-autor-editar" data-id="${autor.autorId}">Editar</button>
                         <button class="biblio-autor-borrar" data-id="${autor.autorId}">Borrar</button>
+                        <button class="biblio-autor-mostrarLibros" data-id="${autor.autorId}">Mostrar Libros</button>
                     </li>`
             ).join('');
         },
@@ -65,7 +66,7 @@ export const $biblio = (function () {
         generarHTMLListadoBibliotecas() {
             return bibliotecas.map(
                 biblioteca => `
-                    <li>${biblioteca.nombre} - ${biblioteca.ubicacion}
+                    <li>${biblioteca.bibliotecaId} - ${biblioteca.nombre} - ${biblioteca.ubicacion}
                         <button class="biblio-biblioteca-ver" data-id="${biblioteca.bibliotecaId}">Ver</button>
                         <button class="biblio-biblioteca-editar" data-id="${biblioteca.bibliotecaId}">Editar</button>
                         <button class="biblio-biblioteca-borrar" data-id="${biblioteca.bibliotecaId}">Borrar</button>
@@ -76,7 +77,7 @@ export const $biblio = (function () {
         generarHTMLListadoLibros() {
             return libros.map(
                 libro => `
-                    <li>${libro.titulo} (ISBN: ${libro.ISBN})
+                    <li>${libro.libroId} - ${libro.titulo}, (ISBN: ${libro.ISBN})
                         <button class="biblio-libro-ver" data-id="${libro.libroId}">Ver</button>
                         <button class="biblio-libro-editar" data-id="${libro.libroId}">Editar</button>
                         <button class="biblio-libro-borrar" data-id="${libro.libroId}">Borrar</button>
@@ -149,7 +150,12 @@ export const $biblio = (function () {
         },
 
         buscarLibro(libroId) {
-            return libros.find(libro => libro.libroId === libroId);
+            for(let libro of libros) {
+                if(libro.libroId === libroId) {
+                    return libro;
+                }
+            }
+            //return libros.find(libro => libro.libroId === libroId);
         },
 
         buscarAutor(autorId) {

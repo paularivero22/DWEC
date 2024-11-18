@@ -13,30 +13,94 @@ const mostrarListadoAutores = () => {
     $contenido.innerHTML = `
         <h2>Listado de Autores</h2>
         <ul>
-            ${$biblio.generarHTMLListadoAutores()}  // Genera el HTML con el listado de autores
+            ${$biblio.generarHTMLListadoAutores()} 
         </ul>
     `;
 
     //event listener para cada botón "Ver" de autor con un for
-    const botones = document.querySelectorAll('.biblio-autor-ver'); // obtiene todos los botones
+    const botonesAutoresVer = document.querySelectorAll('.biblio-autor-ver'); // obtiene todos los botones
 
-    //for para cada boton 
-    for (const boton of botones) {
+    //for para cada boton de ver
+    for (let boton of botonesAutoresVer) {
         boton.addEventListener('click', (event) => {
-            const autorId = event.target.dataset.id; 
+            const autorId = parseInt(event.target.dataset.id); 
             const autor = $biblio.buscarAutor(autorId);
             $contenido.innerHTML = $biblio.generarHTMLResultadoBuscador(autor);
         });
     }
+
+    const botonesAutoresEditar = document.querySelectorAll('.biblio-autor-editar');
+
+    //for para cada boton de editar
+    for (let boton of botonesAutoresEditar) {
+        boton.addEventListener('click', (event) => {
+            const autorId = event.target.dataset.id; 
+            const autor = $biblio.buscarAutor(autorId);
+        });
+    }
+
+    const botonesAutoresBorrar = document.querySelectorAll('.biblio-autor-borrar');
+
+    //for para cada boton de ver
+    for (let boton of botonesAutoresBorrar) {
+        boton.addEventListener('click', (event) => {
+            const autorId = event.target.dataset.id; 
+            const autor = $biblio.buscarAutor(autorId);
+        });
+    }
+
+    const botonesAutoresMostrarLibros = document.querySelectorAll('.biblio-autor-mostrarLibros');
+
+    //for para cada boton de ver
+    for (let boton of botonesAutoresMostrarLibros) {
+        boton.addEventListener('click', (event) => {
+            const autorId = event.target.dataset.id; 
+            const autor = $biblio.buscarAutor(autorId);
+        });
+    }
+
 };
 
 const mostrarListadoBibliotecas = () => {
     $contenido.innerHTML = `
         <h2>Listado de Bibliotecas</h2>
         <ul>
-            ${$biblio.generarHTMLListadoBibliotecas()}  // Genera el HTML con el listado de bibliotecas
+            ${$biblio.generarHTMLListadoBibliotecas()}
         </ul>
     `;
+
+    const botonesBibliotecasVer = document.querySelectorAll('.biblio-biblioteca-ver'); 
+
+    //for para cada boton 
+    for (let boton of botonesBibliotecasVer) {
+        boton.addEventListener('click', (event) => {
+            const bibliotecaId = parseInt(event.target.dataset.id); 
+            const biblioteca = $biblio.buscarBiblioteca(bibliotecaId);
+            $contenido.innerHTML = $biblio.generarHTMLResultadoBuscador(biblioteca);
+        });
+    }
+
+    const botonesBibliotecasEditar = document.querySelectorAll('.biblio-biblioteca-editar'); 
+
+    //for para cada boton 
+    for (let boton of botonesBibliotecasEditar) {
+        boton.addEventListener('click', (event) => {
+            const bibliotecaId = event.target.dataset.id; 
+            const biblioteca = $biblio.buscarBiblioteca(bibliotecaId);
+            
+        });
+    }
+
+    const botonesBibliotecasBorrar = document.querySelectorAll('.biblio-biblioteca-borrar'); 
+
+    //for para cada boton 
+    for (let boton of botonesBibliotecasBorrar) {
+        boton.addEventListener('click', (event) => {
+            const bibliotecaId = event.target.dataset.id; 
+            const biblioteca = $biblio.buscarBiblioteca(bibliotecaId); 
+            
+        });
+    }
 };
 
 const mostrarListadoLibros = () => {
@@ -46,6 +110,38 @@ const mostrarListadoLibros = () => {
             ${$biblio.generarHTMLListadoLibros()}  
         </ul>
     `;
+
+    const botonesLibrosVer = document.querySelectorAll('.biblio-libro-ver'); 
+
+    //for para cada boton 
+    for (let boton of botonesLibrosVer) {
+        boton.addEventListener('click', (event) => {
+            const libroId = parseInt(event.target.dataset.id); 
+            const libro = $biblio.buscarLibro(libroId);
+            $contenido.innerHTML = $biblio.generarHTMLResultadoBuscador(libro);
+        });
+    }
+
+    const botonesLibrosEditar = document.querySelectorAll('.biblio-libro-editar'); 
+
+    //for para cada boton 
+    for (let boton of botonesLibrosEditar) {
+        boton.addEventListener('click', (event) => {
+            const libroId = event.target.dataset.id; 
+            const libro = $biblio.buscarBiblioteca(bibliotecaId);
+        });
+    }
+
+    const botonesLibrosBorrar = document.querySelectorAll('.biblio-libro-borrar'); 
+
+    //for para cada boton 
+    for (let boton of botonesLibrosBorrar) {
+        boton.addEventListener('click', (event) => {
+            const libroId = event.target.dataset.id; 
+            const libro = $biblio.buscarBiblioteca(bibliotecaId);
+            
+        });
+    }
 };
 
 const buscarLibro = () => {
