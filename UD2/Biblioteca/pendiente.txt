@@ -1,0 +1,4 @@
+- editar
+- borrar 
+- ver libros en tabla y boton 
+- quitar buscar libro de otras paginas
