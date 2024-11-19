@@ -16,5 +16,6 @@ export class Vehiculo {
         this.modelo = modelo;
         this.año = año;
         this.motor = motor;
+        this.propietario = {};
     }
 }
