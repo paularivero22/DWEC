@@ -1,13 +1,11 @@
-// scripts.js
+import { GestionMecanica } from './GestionMecanica.js';
+
 document.addEventListener("DOMContentLoaded", () => {
-    // Inicializar la aplicación
-    const contenedor = document.getElementById("resultados");
+    const contenedor = document.getElementById("app"); 
     const gestionMecanica = new GestionMecanica(contenedor);
 
-    // Iniciar la aplicación en el contenedor con id 'resultados'
-    gestionMecanica.iniciarApp("#resultados");
+    gestionMecanica.iniciarApp("#app");
 
-    // Agregar más interacciones si es necesario
     document.getElementById("listado").addEventListener("click", () => {
         gestionMecanica.mostrarVehiculos();
     });

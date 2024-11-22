@@ -11,8 +11,19 @@ export class GestionMecanica {
     }
 
     iniciarApp(selector) {
+        // Obtener el contenedor principal donde se va a insertar el contenido
+        const contenedor = document.querySelector(selector);
 
+        // Generar el HTML base (cabecera, navegación)
+        contenedor.innerHTML = this.#generaHTMLBase();
+
+        // Agregar los eventos a los enlaces de navegación
+        this.agregarEventos();
+
+        // Cargar los vehículos por defecto al cargar la página
+        this.mostrarVehiculos();
     }
+
 
     #generaHTMLBase() {
         return `
@@ -30,7 +41,7 @@ export class GestionMecanica {
         </ul>
     </nav>
 
-    <div id="resultados">
+    <div id="app">
 
     </div>
     `;
@@ -138,19 +149,18 @@ export class GestionMecanica {
                 .map(reparacion => `
                     <li>
                         <strong>Fecha:</strong> ${reparacion.fecha} - 
-                        <strong>Vehículo:</strong> ${this.#clienteBD.obtenerVehiculo("id", reparacion.vehiculoId)?.matricula || "Desconocido"} - 
+                        <strong>Vehículo:</strong> ${this.#clienteBD.obtenerVehiculo("id", reparacion.vehicucloId)?.matricula || "Desconocido"} - 
                         <strong>Estado:</strong> ${reparacion.terminado ? "Terminado" : "En Proceso"} - 
                         <strong>Pagado:</strong> ${reparacion.pagado ? "Sí" : "No"}
                         <button data-id="${reparacion.id}" class="verReparacion">Ver</button>
                         <button data-id="${reparacion.id}" class="borrarReparacion">Borrar</button>
                     </li>
-                `)
-                .join("")}
+                `).join("")}
         </ul>
     `;
     }
 
-    #generarHTMLReparación(reparaciónId = 0, vehiculoId = 0) {
+    #generarHTMLReparacion(reparaciónId = 0, vehiculoId = 0) {
         let reparación;
         if (reparaciónId) {
             reparación = this.#clienteBD.obtenerReparacion(reparaciónId);
@@ -183,8 +193,7 @@ export class GestionMecanica {
                             <input type="number" value="${trabajo.precio}" placeholder="Precio (€)" required>
                             <button type="button" class="borrarTrabajo" data-index="${index}">Borrar</button>
                         </div>
-                    `)
-                .join("")}
+                    `).join("")}
             </div>
 
             <button type="button" id="agregarTrabajo">Añadir Trabajo</button>
@@ -197,12 +206,10 @@ export class GestionMecanica {
         return this.#clienteBD.obtenerVehiculos();
     }
 
-    // Método público para obtener reparaciones
     obtenerReparaciones() {
         return this.#clienteBD.obtenerReparaciones();
     }
 
-    // Agregar eventos de interacción
     agregarEventos() {
         document.getElementById("inicio").addEventListener("click", () => this.mostrarInicio());
         document.getElementById("listado").addEventListener("click", () => this.mostrarVehiculos());
@@ -211,7 +218,9 @@ export class GestionMecanica {
         document.getElementById("presupuestos").addEventListener("click", () => this.mostrarPresupuestos());
     }
 
-    // Mostrar el inicio
+
+
+
     mostrarInicio() {
         this.#contenedor.innerHTML = `
             <h1>Gestion de taller</h1>
@@ -234,9 +243,19 @@ export class GestionMecanica {
     }
 
     mostrarPresupuestos() {
+        const presupuestos = this.#clienteBD.obtenerReparaciones("presupuesto", true);
         this.#contenedor.innerHTML = `
-            <h2>Presupuestos</h2>
-            <p>Presupuestos generados de reparaciones.</p>
+            <h2>Presupuestos Pendientes</h2>
+            <ul>
+                ${presupuestos
+                .map(p => `
+                        <li>
+                            <strong>Vehículo:</strong> ${this.#clienteBD.obtenerVehiculo("vehiculoId", p.vehiculoId)?.matricula || "Desconocido"} 
+                            <strong>Fecha:</strong> ${p.fecha}
+                            <button data-id="${p.reparacionId}" class="verReparacion">Ver</button>
+                        </li>
+                    `).join("")}
+            </ul>
         `;
     }
 }

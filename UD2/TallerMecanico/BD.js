@@ -40,22 +40,23 @@ export class BD {
 
     obtenerVehiculo(filtro, valor) {
         for (let vehiculo of this.#vehiculos) {
-            switch(filtro) {
+            switch (filtro) {
                 case "vehiculoId":
-                    if(vehiculo.vehiculoId = valor) {
+                    if (vehiculo.vehiculoId === valor) {
                         return vehiculo;
                     }
                 case "matricula":
-                    if(vehiculo.matricula = valor) {
+                    if (vehiculo.matricula === valor) {
                         return vehiculo;
                     }
                 case "telefono":
-                    if(vehiculo.propietario.telefono = valor) {
+                    if (vehiculo.propietario.telefono === valor) {
                         return vehiculo;
                     }
             }
         }
     }
+
 
     crearVehiculo(vehiculo) {
         this.#vehiculos.push(vehiculo);
@@ -66,18 +67,18 @@ export class BD {
     }
 
     obtenerReparaciones(filtro, valor) {
-        for(let reparacion of this.#reparaciones) {
-            switch(filtro) {
+        for (let reparacion of this.#reparaciones) {
+            switch (filtro) {
                 case "fecha":
-                    if(reparacion.fecha === valor) {
+                    if (reparacion.fecha === valor) {
                         return reparacion;
                     }
                 case "pagado":
-                    if(reparacion.pagado === valor) {
+                    if (reparacion.pagado === valor) {
                         return reparacion;
                     }
                 case "terminado":
-                    if(reparacion.terminado === valor) {
+                    if (reparacion.terminado === valor) {
                         return reparacion;
                     }
             }
@@ -85,8 +86,8 @@ export class BD {
     }
 
     obtenerReparacion(reparacionId) {
-        for(let reparacion of this.#reparaciones) {
-            if(reparacion.reparacionId === reparacionId) {
+        for (let reparacion of this.#reparaciones) {
+            if (reparacion.reparacionId === reparacionId) {
                 return reparacion;
             }
         }
