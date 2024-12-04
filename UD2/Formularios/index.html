@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form>
+        <h3>Registro</h3>
+        <div>
+            <label for="nombre">Nombre completo: </label>
+            <input type="text" id="nombre" name="nombre" required minlength="3">
+        </div>
+        <div>
+            <label for="email">Correo electrónico: </label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="password">Contraseña: </label>
+            <input type="text" id="password" name="password" required pattern="\d{9}">
+        </div>
+        <div>
+            <label for="confirmPassword">Confirmar contraseña: </label>
+            <input type="text" id="confirmPassword" name="confirmPassword" required pattern="\d{9}">
+        </div>
+        <div>
+            <label for="fechaNacimiento">Fecha de nacimiento: </label>
+            <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+        </div>
+        <div>
+            <label for="telefono">Teléfono (opcional): </label>
+            <input type="text" id="telefono" name="telefono" required pattern="\d{9}">
+        </div>
+        <div>
+            <label for="genero">Género</label>
+            <select>
+                <option value="">Seleccione</option>
+                <option>Masculino</option>
+                <option>Femenino</option>
+                <option>Otro</option>
+            </select>
+        </div>
+        <div>
+            <input type="checkbox" id="terminos" name="terminos">
+            <label for="terminos">Acepto los términos y condiciones</label>
+        </div>
+        <button>Registrarse</button>
+    </form>
+
+    <div id="resultado"></div>
+
+    <script>
+        const fechaNac = document.getElementById('fechaNacimiento');
+        fechaNac.addEventListener('input', () => {
+            fechaNac.setCustomValidity('');
+            const valor = new Date(fechaNac.value);
+            const hoy = new Date();
+            if (isNaN(valor.getTime())) {
+                return;
+            }
+            const diferenciaTiempo = hoy - valorFecha;
+            const edad = Math.floor(diferenciaTiempo / (1000 * 60 * 60 * 24 * 365.25));
+
+            if (edad < 16) {
+                fechaNac.setCustomValidity('La edad debe ser mayor o igual a 16');
+            } else if (edad > 99) {
+                fechaNac.setCustomValidity('La edad debe ser menor o igual a 99');
+            }
+            console.log(fechaNac.validity);
+        });
+
+
+        const contraseña1 = document.getElementById('password');
+        const contraseña2 = document.getElementById('confirmPassword');
+        contraseña2.addEventListener('input', () => {
+            contraseña2.setCustomValidity('');
+            const contraseñaValor = contraseña2.value;
+            
+            if(contraseñaValor !== contraseña1) {
+                contraseña2.setCustomValidity('Las contraseñas deben coincidir');
+            }
+            console.log(contraseña2.validity);
+        });
+
+    </script>
+</body>
+
+</html>
