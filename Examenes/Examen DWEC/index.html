@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilos.css">
+    <script type="module" src="GestionTareas.js"></script>
+    <script type="module" src="scripts.js"></script>
+    <title>EXA2 - Gestión de tareas - Paula Rivero</title>
+</head>
+
+<body>
+    <main>
+        <!-- Barra superior -->
+        <div class="barra">
+            <input id="barraBusqueda" placeholder="Filtro..." />
+            <button id="nueva">Nueva</button>
+        </div>
+
+        <!-- Contenido -->
+        <div class="contenido" id="contenido">
+            <!-- Tabla -->
+            <div class="columna">
+                <h3>Lista de tareas</h3>
+                <div class="tabla">
+                    <div class="tabla-cabecera">
+                        <div>Título</div>
+                        <div>Prioridad</div>
+                        <div>Límite</div>
+                        <div></div>
+                    </div>
+                    <div class="tabla-cuerpo">
+                            
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulario -->
+            <div class="columna">
+                <h3>Crear/Editar tarea</h3>
+                <form name="frmTarea">
+					<!-- Identificador -->
+                    <input type="hidden" name="tareaId">
+
+                    <label for="titulo">Título</label>
+                    <input type="text" id="titulo" name="titulo" required minlength="5">
+                    <span class="error-titulo">
+                        
+                    </span>
+
+                    <label for="prioridad">Prioridad</label>
+                    <select id="prioridad" name="prioridad" required>
+                        <option value="alta">Alta</option>
+                        <option value="">Media</option>
+                        <option>Baja</option>
+                    </select>
+                    <span></span>
+
+                    <label for="fechaRegistro">Fecha de Registro</label>
+                    <input type="date" id="fecharegistro" required>
+                    <span></span>
+
+                    <label for="fechaLimite">Fecha Límite</label>
+                    <input type="date" id="fechaLimite" required>
+                    <span></span>
+
+                    <label for="descripcion">Descripción</label>
+                    <textarea id="descripcion" name="descripcion"></textarea>
+
+                    <label for="responsable">Responsable</label>
+                    <!-- No pilla acentos -->
+                    <input type="text" id="responsable" name="responsable" required minlength="3" pattern="[a-zA-Z\s]">
+                    <span></span>
+
+                    <input type="checkbox" id="completada" name="completada"/>Completada
+                    
+                    <div class="acciones">
+                        <button type="button" id="guardar" name="guardar">Guardar</button>
+                        <button type="reset">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

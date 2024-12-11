@@ -1,0 +1,122 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: beige;
+    display: flex;
+    justify-content: center;
+}
+
+main {
+    width: 90%;
+    background-color: white;
+    padding: 20px;
+    /*     height: 100vh; */
+}
+
+.barra {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+
+    input {
+        flex: 1;
+        margin-right: 10px;
+    }
+
+}
+
+button {
+    padding: 3px 10px;
+}
+
+.contenido {
+    display: flex;
+    gap: 10px;
+
+    .columna {
+        border: 1px solid black;
+        border-radius: 3px;
+        padding: 10px;
+        width: 0;
+    }
+
+    .columna:first-child {
+        flex: 1;
+    }
+
+    .columna:last-child {
+        flex: 0 0 35%;
+    }
+
+}
+
+.tabla {
+    margin-top: 10px;
+}
+
+.tabla-cabecera {
+    display: flex;
+    flex-direction: row;
+
+    div {
+        flex: 1;
+        border: 1px solid black;
+        padding: 3px 10px;
+        text-align: center;
+    }
+}
+
+.fila {
+    display: flex;
+    flex-direction: row;
+
+    div {
+        flex: 1;
+        border: 1px solid black;
+        padding: 3px 10px;
+
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+label,
+span {
+    display: block;
+}
+
+span {
+    color: red;
+}
+
+label {
+    margin-top: 10px;
+}
+
+textarea,
+input[type="text"] {
+    width: 100%;
+}
+
+.acciones {
+    padding-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Añadir estilos */
+/* Tarea pasada de fecha */
+.pasada {
+    background-color: orangered;
+}
+
+/* Fila seleccionada */
+.seleccionada {
+    background-color: yellow;
+}
