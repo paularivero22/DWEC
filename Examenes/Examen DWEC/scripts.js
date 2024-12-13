@@ -137,89 +137,59 @@ botonNuevo.addEventListener('click', function() {
 
     // Limpia el formulario de creación
     formCreacion.reset();
-    crearTarea();
+
 });
 
-/*function crearTarea() {
-    //recoger los valores de los campos
-    const titulo = document.getElementById('titulo').value;
-    const prioridad = document.getElementById('prioridad').value;
-    const fechaRegistro = document.getElementById('fechaRegistro').value;
-    const fechaLimite = document.getElementById('fechaLimite').value;
-    const descripcion = document.getElementById('descripcion').value;
-    const responsable = document.getElementById('responsable').value;
-    const completada = document.getElementById('completada').value;
-    //const botonGuardar = document.getElementById('guardar').checked;
+function crearTarea() {
 
-    //si hay tareas en la lista asignamos el tarea id de la ultima tarea
-    //si no hay tareas asignamos 1 como id
-    let tareaId;
-    if (listaTareas.length > 0) {
-        tareaId = listaTareas[listaTareas.length - 1].tareaId + 1;
-    } else {
-        tareaId = 1;
-    }
-
-    const tareaNueva = new Tarea(listaTareas.length, titulo, prioridad, fechaRegistro, fechaLimite, descripcion, responsable, completada);
-    listaTareas.push(tareaNueva);
-
-    //recargar tabla
-    mostrarTabla(barra.value);
-}*/
-
-/*function editarTarea() {
-    const tituloExistente = document.querySelector('#contenedorFormulario h3');
-    if (tituloExistente) {
-        tituloExistente.remove(); 
-    }
-    contenedorFormulario.insertBefore(tituloH3, formCreacion);
-    const tareaId = parseInt(formCreacion.elements['tareaId'].value);
-    const tareaEditada = buscarTarea(tareaId);
-
-    tareaEditada.titulo = formCreacion.elements['titulo'].value;
-    tareaEditada.prioridad = formCreacion.elements['prioridad'].value;
-    tareaEditada.fechaRegistro = formCreacion.elements['fechaRegistro'].value;
-    tareaEditada.fechaLimite = formCreacion.elements['fechaLimite'].value;
-    tareaEditada.descripcion = formCreacion.elements['descripcion'].value;
-    tareaEditada.responsable = formCreacion.elements['responsable'].value;
-    tareaEditada.completada = formCreacion.elements['completada'].checked;
-
-    mostrarTabla(barra.value);
-}*/
+}
 
 botonGuardar.addEventListener('click', function() {
-    let nuevaTarea;
-    nuevaTarea.titulo = document.getElementById('titulo').value;
-    nuevaTarea.prioridad = document.getElementById('prioridad').value;
-    nuevaTarea.fechaRegistro = document.getElementById('fechaRegistro').value;
-    nuevaTarea.fechaLimite = document.getElementById('fechaLimite').value;
-    nuevaTarea.descripcion = document.getElementById('descripcion').value;
-    nuevaTarea.responsable = document.getElementById('responsable').value;
-    nuevaTarea.completada = document.getElementById('completada').value;
+    let tareaSeleccionada = {
+        tareaId: formCreacion.elements['tareaId'].value.trim(),
+        titulo: formCreacion.elements['titulo'].value.trim(),
+        prioridad: formCreacion.elements['prioridad'].value.trim(),
+        fechaRegistro: formCreacion.elements['fechaRegistro'].value.trim(),
+        fechaLimite: formCreacion.elements['fechaLimite'].value.trim(),
+        descripcion: formCreacion.elements['descripcion'].value.trim(),
+        responsable: formCreacion.elements['responsable'].value.trim(),
+        completada: formCreacion.elements['completada'].value
+    };
 
-    //comprobar si existe para crear o editar la tarea
-    let existe;
-    let tareaAEditar;
+    let existe = false;
+    let tareaEncontrada = {};
 
-    for(let tarea of tareas) {
-        if(tarea.titulo === nuevaTarea.titulo) {
+    for(let tarea of listaTareas) {
+        if((tareaSeleccionada.tareaId == tarea.tareaId)) {
             existe = true;
-            tareaAEditar = tarea;
-            break;
-        } else {
-            existe = false;
+            tareaEncontrada = tarea;
         }
     }
+    
+    if (existe) {
+        console.log('La tarea ya existe, se editará');
+        // si existe, actualizar la tarea existente
 
-    //si la tarea ya existe se remplaza y si no se añade a la lista
-    if(existe) {
-        tareaAEditar = tareaNueva;
+        tareaEncontrada.tareaId = tareaSeleccionada.tareaId;
+        tareaEncontrada.titulo = tareaSeleccionada.titulo;
+        tareaEncontrada.prioridad = tareaSeleccionada.prioridad;
+        tareaEncontrada.fechaRegistro = tareaSeleccionada.fechaRegistro;
+        tareaEncontrada.fechaLimite = tareaSeleccionada.fechaLimite;
+        tareaEncontrada.descripcion = tareaSeleccionada.descripcion;
+        tareaEncontrada.responsable = tareaSeleccionada.responsable;
+        tareaEncontrada.completada = tareaSeleccionada.completada;
     } else {
-        listaTareas.push(tareaNueva);
+        console.log('La tarea no existe, se cerará una nueva');
+        // si no existe, asignar un nuevo ID y agregarla a la lista
+
+        tareaSeleccionada.tareaId = listaTareas.length;
+        listaTareas.push(tareaSeleccionada);
     }
 
-    //resetear tabla
     mostrarTabla();
 });
 
-iniciarApp();
+//evento para iniciar el programa cuando se cargue la pagina
+window.addEventListener('load', function() {
+    iniciarApp();
+}) ;
