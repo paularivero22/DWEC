@@ -3,9 +3,6 @@ import tareas from './datos.js';
 
 /*
 5. cuando se pulse el boton guardar hay que validar todos los campos (for)
-6. cuando se pulse guardar si estamos editando la tarea la buscamos en la lista de tareas y se actualiza
-7. si la tarea es nuevo se asigna  el id y se añade a la lista de tareas
-8. llamar a recargar lista
 */
 
 //1. Localizar los elementos de la pagina y guardarlas en las constantes
@@ -25,6 +22,7 @@ const formCreacion = document.forms['frmTarea'];
 //boton guardar del formulario
 const botonGuardar = document.getElementById('guardar');
 const accion = document.getElementById('accionForm');
+let filaSeleccionada;
 
 let listaTareas = [];
 
@@ -83,14 +81,29 @@ function generarHTMLListadoTareas(filtro = '') {
             fila.appendChild(celdaAcciones);
 
             //4. Cuando se haga click sobre la fila se tiene que cargar en el formulario
-            fila.addEventListener('click', function() {
-                //poner el titulo Editar Tarea para saber que accion esta realizando
-                accion.innerHTML = '';
+            fila.addEventListener('click', function(event) {
+                // Si la fila actual ya estaba seleccionada, se deselecciona
+                if (filaSeleccionada === fila) {
+                    filaSeleccionada.classList.remove('seleccionada');
+                    filaSeleccionada = null; 
+                    formCreacion.reset(); 
+                    accion.innerHTML = ''; 
+                    return;
+                }
+            
+                // Si hay una fila previamente seleccionada, quitar la clase 'seleccionada'
+                if (filaSeleccionada) {
+                    filaSeleccionada.classList.remove('seleccionada');
+                }
+            
+                // Seleccionar la fila actual
+                filaSeleccionada = fila;
+                filaSeleccionada.classList.add('seleccionada');
                 accion.innerHTML = 'Editar Tarea';
                 formCreacion.reset();
                 cargarFormulario(tarea);
             });
-
+            
             cuerpoTabla.appendChild(fila);
 
             botonBorrar.addEventListener('click', (e) => {
@@ -182,12 +195,30 @@ botonGuardar.addEventListener('click', function() {
         console.log('La tarea no existe, se cerará una nueva');
         // si no existe, asignar un nuevo ID y agregarla a la lista
 
-        tareaSeleccionada.tareaId = listaTareas.length;
+        tareaSeleccionada.tareaId = listaTareas.length+1;
         listaTareas.push(tareaSeleccionada);
     }
 
     mostrarTabla();
 });
+
+function eliminarTarea(tareaId) {
+    listaTareas = listaTareas.filter(tarea => tarea.tareaId != tareaId);
+
+    mostrarTabla();
+}
+
+//validaciones
+function validarTitulo(titulo) {
+    const spanTitulo = document.getElementById("error-titulo");
+    if(!titulo.checkValidity()) {
+        spanTitulo.innerHTML('El nombre debe tener como minimo 3 caracteres');
+        return "";
+    } else {
+        return titulo;
+    }
+}
+
 
 //evento para iniciar el programa cuando se cargue la pagina
 window.addEventListener('load', function() {

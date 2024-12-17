@@ -32,30 +32,6 @@ export class Tarea {
     get fechaLimite() {
         return this._fechaLimite; 
     }
-    /*
-    set titulo(nuevoTitulo) {
-        this.titulo = nuevoTitulo;
-    }
-
-    set prioridad(nuevaPrioridad) {
-        this.prioridad = nuevaPrioridad;
-    }
-
-    set fechaRegistro(nuevaFechaRegistro) {
-        this.fechaRegistro = nuevaFechaRegistro;
-    }
-
-    set fechaLimite(nuevaFechaLimite) {
-        this.fechaLimite = nuevaFechaLimite;
-    }
-
-    set descripcion(nuevaDescripcion) {
-        this.descripcion = nuevaDescripcion;
-    }
-
-    set responsable(nuevoResponsable) {
-        this.responsable = nuevoResponsable;
-    }*/
 }
 
 document.getElementById('buscador')
