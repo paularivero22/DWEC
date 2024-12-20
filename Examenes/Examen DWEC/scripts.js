@@ -16,6 +16,9 @@ const botonNuevo = document.getElementById('nueva');
 //cuerpo de la tabla donde insertar las tareas
 const cuerpoTabla = document.querySelector('.tabla-cuerpo');
 
+//boton de recargar
+const botonRecargar = document.getElementById('recargar');
+
 //formulario de creacion
 const formCreacion = document.forms['frmTarea'];
 
@@ -29,8 +32,9 @@ let listaTareas = [];
 //funcion para cargar los datos del archivo datos
 function cargarDatos() {
     for (let tarea of tareas) {
-        let tareaNueva = new Tarea(tarea.tareaId, tarea.titulo, tarea.prioridad, tarea.fechaRegistro, tarea.fechaLimite, tarea.descripcion, tarea.responsable, tarea.completada);
-        listaTareas.push(tareaNueva);  // Usar la variable global listaTareas
+        //let tareaNueva = new Tarea(tarea.tareaId, tarea.titulo, tarea.prioridad, tarea.fechaRegistro, tarea.fechaLimite, tarea.descripcion, tarea.responsable, tarea.completada);
+        //listaTareas.push(tareaNueva);  // Usar la variable global listaTareas
+        listaTareas.push(tarea);
     }
 }
 
@@ -41,7 +45,7 @@ function iniciarApp() {
 }
 
 barra.addEventListener('input', (e) => {
-    mostrarTabla(e.target.value);  
+    mostrarTabla(e.target.value);
 });
 
 //3. Cuando cargo la tabla en cada fila tiene que tener la clase fila, la clase pasada y el boton de borrar
@@ -81,21 +85,21 @@ function generarHTMLListadoTareas(filtro = '') {
             fila.appendChild(celdaAcciones);
 
             //4. Cuando se haga click sobre la fila se tiene que cargar en el formulario
-            fila.addEventListener('click', function(event) {
+            fila.addEventListener('click', function (event) {
                 // Si la fila actual ya estaba seleccionada, se deselecciona
                 if (filaSeleccionada === fila) {
                     filaSeleccionada.classList.remove('seleccionada');
-                    filaSeleccionada = null; 
-                    formCreacion.reset(); 
-                    accion.innerHTML = ''; 
+                    filaSeleccionada = null;
+                    formCreacion.reset();
+                    accion.innerHTML = '';
                     return;
                 }
-            
+
                 // Si hay una fila previamente seleccionada, quitar la clase 'seleccionada'
                 if (filaSeleccionada) {
                     filaSeleccionada.classList.remove('seleccionada');
                 }
-            
+
                 // Seleccionar la fila actual
                 filaSeleccionada = fila;
                 filaSeleccionada.classList.add('seleccionada');
@@ -103,7 +107,7 @@ function generarHTMLListadoTareas(filtro = '') {
                 formCreacion.reset();
                 cargarFormulario(tarea);
             });
-            
+
             cuerpoTabla.appendChild(fila);
 
             botonBorrar.addEventListener('click', (e) => {
@@ -114,7 +118,7 @@ function generarHTMLListadoTareas(filtro = '') {
     }
 }
 
-function mostrarTabla(filtro = '') {
+function mostrarTabla(filtro = '') { 
     generarHTMLListadoTareas(filtro);
 }
 
@@ -143,7 +147,7 @@ function buscarTarea(id) {
 }
 
 //evento para crear una nueva tarea
-botonNuevo.addEventListener('click', function() {
+botonNuevo.addEventListener('click', function () {
     //poner el titulo Nueva Tarea para saber que accion esta realizando
     accion.innerHTML = '';
     accion.innerHTML = 'Nueva Tarea';
@@ -153,36 +157,31 @@ botonNuevo.addEventListener('click', function() {
 
 });
 
-function crearTarea() {
-
-}
-
-botonGuardar.addEventListener('click', function() {
+botonGuardar.addEventListener('click', function () {
     let tareaSeleccionada = {
         tareaId: formCreacion.elements['tareaId'].value.trim(),
         titulo: formCreacion.elements['titulo'].value.trim(),
         prioridad: formCreacion.elements['prioridad'].value.trim(),
-        fechaRegistro: formCreacion.elements['fechaRegistro'].value.trim(),
-        fechaLimite: formCreacion.elements['fechaLimite'].value.trim(),
+        fechaRegistro: formCreacion.elements['fechaRegistro'].value,
+        fechaLimite: formCreacion.elements['fechaLimite'].value,
         descripcion: formCreacion.elements['descripcion'].value.trim(),
         responsable: formCreacion.elements['responsable'].value.trim(),
-        completada: formCreacion.elements['completada'].value
+        completada: formCreacion.elements['completada'].checked
     };
-
+    console.log(typeof(tareaSeleccionada.fechaLimite));
+    console.log(typeof(tareaSeleccionada.fechaRegistro));
     let existe = false;
     let tareaEncontrada = {};
 
-    for(let tarea of listaTareas) {
-        if((tareaSeleccionada.tareaId == tarea.tareaId)) {
+    for (let tarea of listaTareas) {
+        if ((tareaSeleccionada.tareaId == tarea.tareaId)) {
             existe = true;
             tareaEncontrada = tarea;
         }
     }
     
     if (existe) {
-        console.log('La tarea ya existe, se editará');
         // si existe, actualizar la tarea existente
-
         tareaEncontrada.tareaId = tareaSeleccionada.tareaId;
         tareaEncontrada.titulo = tareaSeleccionada.titulo;
         tareaEncontrada.prioridad = tareaSeleccionada.prioridad;
@@ -192,15 +191,20 @@ botonGuardar.addEventListener('click', function() {
         tareaEncontrada.responsable = tareaSeleccionada.responsable;
         tareaEncontrada.completada = tareaSeleccionada.completada;
     } else {
-        console.log('La tarea no existe, se cerará una nueva');
         // si no existe, asignar un nuevo ID y agregarla a la lista
-
-        tareaSeleccionada.tareaId = listaTareas.length+1;
+        tareaSeleccionada.tareaId = listaTareas.length + 1;
         listaTareas.push(tareaSeleccionada);
     }
 
     mostrarTabla();
 });
+
+
+botonRecargar.addEventListener('click', function() {
+    cuerpoTabla.innerHTML = "";
+    mostrarTabla();
+});
+
 
 function eliminarTarea(tareaId) {
     listaTareas = listaTareas.filter(tarea => tarea.tareaId != tareaId);
@@ -211,7 +215,7 @@ function eliminarTarea(tareaId) {
 //validaciones
 function validarTitulo(titulo) {
     const spanTitulo = document.getElementById("error-titulo");
-    if(!titulo.checkValidity()) {
+    if (!titulo.checkValidity()) {
         spanTitulo.innerHTML('El nombre debe tener como minimo 3 caracteres');
         return "";
     } else {
@@ -221,6 +225,6 @@ function validarTitulo(titulo) {
 
 
 //evento para iniciar el programa cuando se cargue la pagina
-window.addEventListener('load', function() {
+window.addEventListener('load', function () {
     iniciarApp();
-}) ;
+});

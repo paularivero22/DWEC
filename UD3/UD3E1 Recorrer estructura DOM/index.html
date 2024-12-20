@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recorrer Estructura del DOM</title>
+</head>
+<body>
+    <header>
+        <h1 id="main-title" class="title primary">Recorrer Estructura del DOM</h1>
+        <nav>
+            <ul>
+                <li class="menu-item" data-info="inicio"><a href="#inicio">Inicio</a></li>
+                <li class="menu-item" data-info="sobre-nosotros"><a href="#sobre">Sobre Nosotros</a></li>
+                <li class="menu-item" data-info="contacto"><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="introduccion" class="section intro">
+            <h2>Introducción</h2>
+            <p>Este es un ejemplo de cómo analizar el DOM con JavaScript.</p>
+        </section>
+        <section id="contenido" class="section content">
+            <h2>Contenido</h2>
+            <div>
+                <p data-info="parrafo1">Este es el primer párrafo.</p>
+                <p data-info="parrafo2">Este es el segundo párrafo.</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p id="copyright" class="footer-text">© 2024 - Todos los derechos reservados</p>
+    </footer>
+
+    <button id="mostrar-json">Mostrar Estructura JSON</button>
+    <button id="mostrar-texto">Imprimir Estructura (Raíz al Nodo)</button>
+    <input type="text" id="selector" placeholder="Introduce un selector CSS">
+    <pre id="output"></pre>
+
+    <script src="script.js"></script>
+</body>
+</html>
