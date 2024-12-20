@@ -1,0 +1,19 @@
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 40px;
+    align-items: left;
+}
+
+span {
+    color: red;
+}
+
+.valido {
+    background-color: rgba(171, 219, 99, 0.418);
+}
+
+.noValido {
+    background-color: rgba(255, 0, 0, 0.397);
+}

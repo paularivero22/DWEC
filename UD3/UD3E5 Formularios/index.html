@@ -5,84 +5,111 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="estilos.css">
 </head>
 
 <body>
-    <form>
-        <h3>Registro</h3>
+    <h1>Registro</h1>
+    <form id="registroForm">
         <div>
-            <label for="nombre">Nombre completo: </label>
-            <input type="text" id="nombre" name="nombre" required minlength="3">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required minlength="3" pattern="^[a-zA-Z\s]+$"><br>
+            <span id="error-nombre"></span>
         </div>
+
         <div>
-            <label for="email">Correo electrónico: </label>
-            <input type="email" id="email" name="email" required>
+            <label for="correo">Correo electrónico:</label>
+            <input type="email" id="correo" name="correo" required><br>
+            <span id="error-correo"></span>
         </div>
+
         <div>
-            <label for="password">Contraseña: </label>
-            <input type="text" id="password" name="password" required pattern="\d{9}">
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required minlength="8" 
+                pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).+$"><br>
+                <span id="error-password"></span>
         </div>
+
         <div>
-            <label for="confirmPassword">Confirmar contraseña: </label>
-            <input type="text" id="confirmPassword" name="confirmPassword" required pattern="\d{9}">
+            <label for="confirmPassword">Confirmar contraseña:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+            <span id="error-password2"></span>
         </div>
+
         <div>
-            <label for="fechaNacimiento">Fecha de nacimiento: </label>
-            <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+            <label for="fechaNacimiento">Fecha de nacimiento:</label>
+            <input type="date" id="fechaNacimiento" name="fechaNacimiento" required><br>
+            <span id="error-fechaNacimiento"></span>
         </div>
+
         <div>
-            <label for="telefono">Teléfono (opcional): </label>
-            <input type="text" id="telefono" name="telefono" required pattern="\d{9}">
+            <label for="telefono">Teléfono:</label>
+            <input type="tel" id="telefono" name="telefono" pattern="^\d{9}$"><br>
+            <span id="error-telefono"></span>
         </div>
+
         <div>
-            <label for="genero">Género</label>
-            <select>
-                <option value="">Seleccione</option>
-                <option>Masculino</option>
-                <option>Femenino</option>
-                <option>Otro</option>
+            <label for="genero">Género:</label>
+            <select id="genero" name="genero" required>
+                <option value="" disabled selected>Seleccione</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Otro">Otro</option>
             </select>
         </div>
+
         <div>
-            <input type="checkbox" id="terminos" name="terminos">
-            <label for="terminos">Acepto los términos y condiciones</label>
+            <label>
+                <input type="checkbox" id="terminos" name="terminos" required>
+                Acepto los términos y condiciones
+                <span id="error-terminos"></span>
+            </label>
         </div>
-        <button>Registrarse</button>
+
+        <div>
+            <button type="submit">Registrarse</button>
+        </div>
     </form>
 
-    <div id="resultado"></div>
-
     <script>
+
+        //validar fecha
         const fechaNac = document.getElementById('fechaNacimiento');
+        const spanFecha = document.getElementById('error-fechaNacimiento');
+
         fechaNac.addEventListener('input', () => {
-            fechaNac.setCustomValidity('');
-            const valor = new Date(fechaNac.value);
             const hoy = new Date();
-            if (isNaN(valor.getTime())) {
-                return;
-            }
-            const diferenciaTiempo = hoy - valorFecha;
+            const diferenciaTiempo = hoy - fechaNac.value;
             const edad = Math.floor(diferenciaTiempo / (1000 * 60 * 60 * 24 * 365.25));
 
             if (edad < 16) {
                 fechaNac.setCustomValidity('La edad debe ser mayor o igual a 16');
+                spanFecha.innerHTML = 'La edad debe ser mayor o igual a 16';
+                
             } else if (edad > 99) {
                 fechaNac.setCustomValidity('La edad debe ser menor o igual a 99');
+                spanFecha.innerHTML = 'La edad debe ser menor o igual a 99';
             }
             console.log(fechaNac.validity);
         });
 
 
-        const contraseña1 = document.getElementById('password');
-        const contraseña2 = document.getElementById('confirmPassword');
-        contraseña2.addEventListener('input', () => {
-            contraseña2.setCustomValidity('');
-            const contraseñaValor = contraseña2.value;
-            
-            if(contraseñaValor !== contraseña1) {
-                contraseña2.setCustomValidity('Las contraseñas deben coincidir');
+        //validar confirmar contraseña
+        const password1 = document.getElementById('password');
+        const password2 = document.getElementById('confirmPassword');
+        const errorPassword2 = document.getElementById('error-password2');
+
+        password2.addEventListener('input', () => {
+            if (password2.value !== password1.value) {
+                password2.setCustomValidity('Las contraseñas deben coincidir');
+                errorPassword2.innerHTML = 'Las contraseñas deben coincidir';
+                password2.classList.add('noValido');
+            } else {
+                password2.setCustomValidity('');
+                errorPassword2.innerHTML = '';
+                password2.classList.remove('noValido');
+                password2.classList.add('valido');
             }
-            console.log(contraseña2.validity);
         });
 
     </script>
